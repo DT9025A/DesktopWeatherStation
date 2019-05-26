@@ -35,7 +35,7 @@ local lgHeader = nil
 local function subHost(pURL)
 	local lHost = pURL, lDir, lTemp
 
-	if pURL:find("://", 1) > 1 then
+	if pURL:find("://", 1) ~= nil then
 		lHost = pURL:sub(pURL:find("://", 1) + 3, pURL:len())
 	end
 
