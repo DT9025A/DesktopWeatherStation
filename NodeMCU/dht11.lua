@@ -23,9 +23,11 @@
 
 function readDHT(pPin)
 	lStatus,lTemperature,lHumidity,lTemperatureFloat,lHumidityFloat = dht.read11(pPin)
+	
 	if lStatus == dht.OK then
 		print(lTemperature .. "." .. lTemperatureFloat .. "," .. lHumidity .. "." .. lHumidityFloat)
 	else
 		print("ERROR")
 	end
+	
 end

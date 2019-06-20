@@ -1,0 +1,2 @@
+{"wifi":[{"ssid":"test0","pwd":"12345678"},{"ssid":"test2","pwd":"abcdefg"},{"ssid":"test1","pwd":"23333333"}]}
+//here should be a '\n' at end of line 1

@@ -35,8 +35,9 @@ local lgHeader = nil
 local function subHost(pURL)
 	local lHost = pURL, lDir, lTemp
 
-	if pURL:find("://", 1) ~= nil then
-		lHost = pURL:sub(pURL:find("://", 1) + 3, pURL:len())
+	lTemp = pURL:find("://", 1)
+	if lTemp ~= nil then
+		lHost = pURL:sub(lTemp + 3, pURL:len())
 	end
 
 	lTemp = lHost:find("[/?]", 1)
@@ -58,7 +59,7 @@ function httpRequest(pURL, pMeta, pHeaders, pPort, pCallBackFunc)
 	local lHost, lDir = subHost(pURL)
 	local lPostBody = ""
 
-	if pMeta.method == nil then
+	if pMeta.method == nil or pMeta == nil then
 		return -1
 	end
 
@@ -78,8 +79,10 @@ function httpRequest(pURL, pMeta, pHeaders, pPort, pCallBackFunc)
 	--注册接收事件
 	if pCallBackFunc ~= nil then
 		connection:on("receive", pCallBackFunc)
+		connection:on("receive", pCallBackFunc)
 	else
 		connection:on("receive", function(connection, plainText)
+			plainText = plainText:sub(plainText:find("\r\n\r\n", 1) + 4, plainText:len())
 			print(plainText)
 		end)
 	end

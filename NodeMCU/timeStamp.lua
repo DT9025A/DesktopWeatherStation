@@ -27,7 +27,7 @@
 	variable in this file [gName]
 ]]--
 
-require("extend") --使用int()
+require("extend")
 
 local lgDayTab = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31} --日期表
 

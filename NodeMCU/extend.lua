@@ -10,11 +10,17 @@
 	Modifier:
 	
 	Functions:
-	int int(pFloat)
+	number int(pFloat)
 		cast float to int
 
-	int table_len(pTable)
+	bool typeVerify(pType, pParameter)
+		verify parameter's type
+		
+	number tableLen(pTable)
 		calculate length of a table
+		
+	table tableRemove(pTable, pIndex)
+		remove object at pIndex in pTable
 	
 	Variable naming rules:
 	local variable in function [lName]
@@ -28,10 +34,36 @@ function int(pFloat)
 	return pFloat - pFloat % 1
 end
 
-function table_len(pTable)
-	local lLength = 0
-	for k,v in pairs(pTable) do
-		lLength = lLength + 1
+function typeVerify(pType, pParameter)
+	if pType == type(pParameter) then
+		return true
 	end
+	return false
+end
+
+function tableLen(pTable)
+	local lLength = 0
+	
+	if typeVerify("table", pTable) then
+		for k,v in pairs(pTable) do
+			lLength = lLength + 1
+		end
+	end
+	
 	return lLength
 end
+
+function tableRemove(pTable, pIndex)
+	local lResult = {}
+	local lResIndex = 1
+	
+	for lCount = 1, tableLen(pTable), 1 do
+		if lCount ~= pIndex then
+			lResult[lResIndex] = pTable[lCount]
+			lResIndex = lResIndex + 1
+		end
+	end
+	
+	return lResult
+end
+
