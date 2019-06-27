@@ -13,23 +13,23 @@ LUA脚本 :
 
 NodeMCU引脚接线示意
 
-		---------------------
-		|	-----	-----	|
-		|	|	|	|		|
-		|	|	-----		|
-		|	|				|
-		|					|
-		|					|
-	RST |RST			 TXD| RXD
-		|ADC			 RXD| TXD
-	EN  |EN 			   5|
-	DHT |16 			   4|
-	SCLK|14 			   0| IRQ_STM
-	MISO|12 			   2| IRQ_XPT
-	MOSI|13				  15| CS_XPT
-	VCC |VCC			 GND| GND
-		---------------------
-		
+        ---------------------
+        |  -----     ----   |
+        |  |    |    |      |
+        |  |    -----       |
+        |  |                |
+        |                   |
+        |                   |
+    RST |RST             TXD| RXD
+        |ADC             RXD| TXD
+    EN  |EN                5|
+    DHT |16                4|
+    SCLK|14                0| IRQ_STM
+    MISO|12                2| IRQ_XPT
+    MOSI|13               15| CS_XPT
+    VCC |VCC             GND| GND
+        ---------------------
+
 	RST:		复位
 	EN:			更新固件时拉低
 	DHT:		接DHT11

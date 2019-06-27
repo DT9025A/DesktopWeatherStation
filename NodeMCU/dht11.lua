@@ -22,12 +22,10 @@
 ]]--
 
 function readDHT(pPin)
-	lStatus,lTemperature,lHumidity,lTemperatureFloat,lHumidityFloat = dht.read11(pPin)
-	
+	lStatus, lTemperature, lHumidity = dht.read11(pPin)
 	if lStatus == dht.OK then
-		print(lTemperature .. "." .. lTemperatureFloat .. "," .. lHumidity .. "." .. lHumidityFloat)
+		print(lTemperature .. "," .. lHumidity)
 	else
 		print("ERROR")
 	end
-	
 end

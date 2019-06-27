@@ -40,29 +40,23 @@ require("extend")
 
 local function readFile()
 	local lConfJson, lConfFile
-	
 	if file.exists("wlan.json") then
 		lConfFile = file.open("wlan.json", "r")
-		
 		if lConfFile:read("\n") ~= nil then
 			lConfFile:seek("set")
 			lConfJson = sjson.decode(lConfFile:read("\n"))
 		end
-		
 		return lConfJson, lConfFile, nil
 	end
-	
 	return nil, nil, "Error in function wlanRecord/readFile()"
 end
 
 local function updateFile()
 	local lIndex
 	local lConfJson, lConfFile, lResult = readFile()
-	
 	if lResult ~= nil then
 		return nil, nil, nil, lResult
 	end
-	
 	if lConfJson ~= nil then
 		lIndex = tableLen(lConfJson.wifi) + 1
 		lConfFile.close()
@@ -71,7 +65,6 @@ local function updateFile()
 		lConfJson = {wifi = {{ssid, pwd}}}
 		lIndex = 1
 	end
-	
 	lConfFile = file.open("wlan.json", "w+")
 	return lIndex, lConfJson, lConfFile, nil
 end
@@ -84,15 +77,12 @@ end
 
 function enumerationWLAN(pSSID)
 	local lConfJson, lConfFile, lResult = readFile()
-	
 	if lResult ~= nil then
 		return lResult
 	end
-	
 	if lConfFile ~= nil then
 		lConfFile.close()
 	end
-	
 	if lConfJson ~= nil then
 		for lCount = 1, tableLen(lConfJson.wifi), 1 do
 			if lConfJson.wifi[lCount].ssid == pSSID then
@@ -101,17 +91,14 @@ function enumerationWLAN(pSSID)
 			
 		end
 	end
-	
 	return nil
 end
 
 function addWLAN(pSSID, pPWD)
 	local lIndex, lConfJson, lConfFile, lResult = updateFile()
-	
 	if lResult ~= nil then
 		return false
 	end
-	
 	lConfJson.wifi[lIndex] = {ssid = pSSID, pwd = pPWD}
 	writeAndCloseFile(lConfFile, sjson.encode(lConfJson) .. "\n")
 	return true
@@ -119,7 +106,6 @@ end
 
 function removeWLAN(pSSID)
 	local lIndex, lConfJson, lConfFile = updateFile()
-	
 	if lConfJson.wifi ~= nil then
 		for lIndex = 1, tableLen(lConfJson.wifi), 1 do
 			if lConfJson.wifi[lIndex].ssid == pSSID then

@@ -34,23 +34,18 @@ local lgHeader = nil
 
 local function subHost(pURL)
 	local lHost = pURL, lDir, lTemp
-
 	lTemp = pURL:find("://", 1)
 	if lTemp ~= nil then
 		lHost = pURL:sub(lTemp + 3, pURL:len())
 	end
-
 	lTemp = lHost:find("[/?]", 1)
 	if lTemp ~= nil then
 		lHost = lHost:sub(1, lTemp - 1)
 	end
-
 	lDir = pURL:sub(pURL:find(lHost, 1) + lHost:len(), pURL:len())
-
 	if lDir:sub(1, 1) ~= "/" then
 		lDir = "/" .. lDir
 	end
-
 	return lHost, lDir
 end
 
@@ -58,11 +53,9 @@ end
 function httpRequest(pURL, pMeta, pHeaders, pPort, pCallBackFunc)
 	local lHost, lDir = subHost(pURL)
 	local lPostBody = ""
-
 	if pMeta.method == nil or pMeta == nil then
 		return -1
 	end
-
 	--设置Headers
 	lgHeader = "Connection: Close\r\nUser-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; zh-CN; rv:1.9.2.4) Gecko/20100513 Firefox/3.6.4\r\nAccept: */*\r\n"
 	if pHeaders ~= nil then
@@ -73,9 +66,7 @@ function httpRequest(pURL, pMeta, pHeaders, pPort, pCallBackFunc)
 			lgHeader = lgHeader .. lHeader:gsub("_", "-") .. ": " .. lContent .. "\r\n"
 		end
 	end
-
 	connection = net.createConnection(net.TCP, 0)
-
 	--注册接收事件
 	if pCallBackFunc ~= nil then
 		connection:on("receive", pCallBackFunc)
@@ -86,7 +77,6 @@ function httpRequest(pURL, pMeta, pHeaders, pPort, pCallBackFunc)
 			print(plainText)
 		end)
 	end
-
 	--设置Content-Length段
 	if pMeta.method:upper() == "POST" then
 		if lgHeader.find("Content-Length", 1) == nil then
@@ -98,7 +88,6 @@ function httpRequest(pURL, pMeta, pHeaders, pPort, pCallBackFunc)
 			lgHeader = lgHeader .. "Content-Length: 0\r\n"
 		end
 	end
-
 	--注册连接事件
 	connection:on("connection", function(connection, plainText)
 		connection:send(pMeta.method:upper() .. " " .. lDir .. " HTTP/1.1\r\nHost: " .. lHost .. "\r\n" .. lgHeader .. "\r\n" .. lPostBody)
@@ -110,12 +99,9 @@ function httpRequest(pURL, pMeta, pHeaders, pPort, pCallBackFunc)
 		lDir = nil
 		lHost = nil
 	end)
-
 	if pPort == nil then
 		pPort = 80
 	end
-
 	connection:connect(pPort, lHost)
-
 	return 0
 end
